@@ -120,6 +120,7 @@ body {
 
 .list-end__item:first-child{
     padding: 0.6rem;
+    overflow: hidden;
 }
 
 .list-end__img{

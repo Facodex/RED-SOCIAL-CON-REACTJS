@@ -4,8 +4,10 @@ import { PrivateLayout } from '../components/layout/private/PrivateLayout';
 
 import { PublicLayout } from '../components/layout/public/PublicLayout';
 import { Feed } from '../components/publication/Feed';
+import { Config } from '../components/user/Config';
 import { Login } from '../components/user/Login';
 import { Logout } from '../components/user/Logout';
+import { People } from '../components/user/People';
 import { Register } from '../components/user/Register';
 import { AuthProvider } from '../context/AuthProvider';
 
@@ -32,6 +34,8 @@ export const Routing = () => {
             <Route index element={<Feed />}></Route>
             <Route path='feed' element={<Feed />}></Route>
             <Route path='logout' element={<Logout/>}></Route>
+            <Route path='gente' element={<People/>}></Route>
+            <Route path='ajustes' element={<Config/>}></Route>
           </Route>
 
           {/* ruta de error  */}
