@@ -1,9 +1,13 @@
 import React from 'react'
 import { useState } from 'react';
 import { Global } from '../../helpers/Global';
+import useAuth from '../../hooks/useAuth';
 import { useForm } from '../../hooks/useForm'
 
 export const Login = () => {
+
+    // importo el contexto atraves de un hook personalizado
+    const {auth, setAuth} = useAuth();
 
     const {form, changed} = useForm({});
     const [saved, setSaved] = useState("Not_login");
@@ -35,6 +39,13 @@ export const Login = () => {
             localStorage.setItem('user', JSON.stringify(data.user));
 
             setSaved('login');
+            // setear datos en el auth 
+            setAuth(data.user);
+
+            //redireccionar a /social
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000)
         }else{
             setSaved('error');
         }

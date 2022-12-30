@@ -5,7 +5,9 @@ import { PrivateLayout } from '../components/layout/private/PrivateLayout';
 import { PublicLayout } from '../components/layout/public/PublicLayout';
 import { Feed } from '../components/publication/Feed';
 import { Login } from '../components/user/Login';
+import { Logout } from '../components/user/Logout';
 import { Register } from '../components/user/Register';
+import { AuthProvider } from '../context/AuthProvider';
 
 
 export const Routing = () => {
@@ -13,25 +15,31 @@ export const Routing = () => {
 
     <BrowserRouter>
 
-      <Routes>
+      {/* este es mi provider con mi contexto */}
+      <AuthProvider>
 
-        {/* layout public  */}
-        <Route path="/" element={<PublicLayout />}>
-          <Route index element={<Login />}></Route>
-          <Route path='login' element={<Login />}></Route>
-          <Route path='registro' element={<Register />}></Route>
-        </Route>
+        <Routes>
 
-        {/* layout private */}
-        <Route path="/social" element={<PrivateLayout/>}>
-          <Route index element={<Feed/>}></Route>
-          <Route path='feed' element={<Feed/>}></Route>
-        </Route>
+          {/* layout public  */}
+          <Route path="/" element={<PublicLayout />}>
+            <Route index element={<Login />}></Route>
+            <Route path='login' element={<Login />}></Route>
+            <Route path='registro' element={<Register />}></Route>
+          </Route>
 
-        {/* ruta de error  */}
-        <Route path="*" element={<><p><h1>Error 404</h1><Link to="/">Volver al inicio</Link></p></>}></Route>
+          {/* layout private */}
+          <Route path="/social" element={<PrivateLayout />}>
+            <Route index element={<Feed />}></Route>
+            <Route path='feed' element={<Feed />}></Route>
+            <Route path='logout' element={<Logout/>}></Route>
+          </Route>
 
-      </Routes>
+          {/* ruta de error  */}
+          <Route path="*" element={<><p><h1>Error 404</h1><Link to="/">Volver al inicio</Link></p></>}></Route>
+
+        </Routes>
+
+      </AuthProvider>
 
     </BrowserRouter>
 
