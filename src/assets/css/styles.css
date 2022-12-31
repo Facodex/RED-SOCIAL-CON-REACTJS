@@ -184,6 +184,7 @@ body {
 
 .content__posts{
     width: 100%;
+    margin-top: 25px;
 }
 
 
@@ -457,7 +458,7 @@ button{
     border: 1px solid #770909;
 }
 
-.register-form, .login-form{
+.register-form, .login-form .config-form{
     margin-top: 25px;
 }
 
