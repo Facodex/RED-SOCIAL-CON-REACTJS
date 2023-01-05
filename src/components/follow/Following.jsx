@@ -40,6 +40,7 @@ export const Following = () => {
 
         // crear estado para poder listarlos
         if (data.status == 'success' && data.users) {
+            
             let newUsers = data.users;
 
             if (users.length >= 1) {

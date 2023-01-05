@@ -378,6 +378,7 @@ body {
 
 .container-form__form-post{
     width: 100%;
+    margin-top: 25px;
 }
 
 form{
