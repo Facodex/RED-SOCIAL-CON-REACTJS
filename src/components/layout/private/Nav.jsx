@@ -44,7 +44,7 @@ export const Nav = () => {
                         }
                 </li>
                 <li className="list-end__item">
-                    <NavLink to='/social/logout' className="list-end__link">
+                    <NavLink to={'/social/perfil/'+auth._id} className="list-end__link">
                         <span className="list-end__name">{auth.nick}</span>
                     </NavLink>
                 </li>

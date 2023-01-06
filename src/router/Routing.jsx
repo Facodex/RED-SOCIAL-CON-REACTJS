@@ -11,6 +11,7 @@ import { People } from '../components/user/People';
 import { Register } from '../components/user/Register';
 import { Following } from '../components/follow/Following';
 import { Followers } from '../components/follow/Followers';
+import { Profile } from '../components/user/Profile';
 import { AuthProvider } from '../context/AuthProvider';
 
 
@@ -40,6 +41,7 @@ export const Routing = () => {
             <Route path='ajustes' element={<Config/>}></Route>
             <Route path='siguiendo/:userId' element={<Following/>}></Route>
             <Route path='seguidores/:userId' element={<Followers/>}></Route>
+            <Route path='perfil/:userId' element={<Profile/>}></Route>
           </Route>
 
           {/* ruta de error  */}
