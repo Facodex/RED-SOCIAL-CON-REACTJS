@@ -178,12 +178,23 @@ body {
     float: right;
 }
 
-
 .content__button:hover, .content__btn-more-post:hover {
     background-color: var(--color-background-btn-success-hover);
     border-color: var(--color-border-btn-success-hover);
 }
 
+.content__button--red{
+    background-color: var(--color-background-btn-delete);
+    border-color: var(--color-border-btn-delete);
+}
+.content__button--red:hover{
+    background-color: var(--color-background-btn-delete-hover);
+    border-color: var(--color-border-btn-delete-hover);
+}
+.content__button--green:hover{
+    background-color: var(--color-background-btn-success-hover);
+    border-color: var(--color-border-btn-success-hover);
+}
 
 .content__posts{
     width: 100%;
@@ -274,6 +285,7 @@ body {
     width: 100%;
     display: flex;
     justify-content: center;
+    margin-bottom: 30px;
 }
 
 .content__btn-more-post{
