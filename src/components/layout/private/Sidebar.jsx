@@ -64,14 +64,13 @@ export const Sidebar = () => {
                 setStored('error');
             }
 
-
-            // resetear formulario
-            if(data.status === 'success' && uploadData.status === 'success'){
-                const the_form = document.querySelector('#publication-form');
-                the_form.reset();
-            }
-
         }
+
+        // resetear formulario
+        // if(data.status === 'success' && uploadData.status === 'success'){
+        const the_form = document.querySelector('#publication-form');
+        the_form.reset();
+        // }
 
     }
 
