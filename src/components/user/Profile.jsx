@@ -4,6 +4,7 @@ import avatar from '../../assets/img/user.png';
 import { GetProfile } from '../../helpers/GetProfile';
 import { Global } from '../../helpers/Global';
 import useAuth from '../../hooks/useAuth';
+import { PublicationList } from '../publication/PublicationList';
 
 
 export const Profile = () => {
@@ -13,19 +14,21 @@ export const Profile = () => {
     const [iFollow, setIFollow] = useState(false);
     const [publications, setPublications] = useState([]);
     const [page, setPage] = useState(1);
+    const [more, setMore] = useState(true);
     const params = useParams();
     const { auth } = useAuth();
 
     useEffect(() => {
         getDataUser();
         getCounters();
-        getPublications();
+        getPublications(1, true);
     }, []);
 
     useEffect(() => {
         getDataUser();
         getCounters();
-        getPublications();
+        setMore(true);
+        getPublications(1, true);
     }, [params]);
 
     const getDataUser = async () => {
@@ -93,7 +96,7 @@ export const Profile = () => {
 
 
     // metodo para devolver publicaciones en perfil 
-    const getPublications = async (nextPage = 1) => {
+    const getPublications = async (nextPage = 1, newProfile = false) => {
         const request = await fetch(Global.url + 'publication/user/' + params.userId + '/' + nextPage, {
             method: 'GET',
             headers: {
@@ -108,19 +111,28 @@ export const Profile = () => {
 
             let newPublications = data.publications;
 
-            if( publications.length >= 1){
+            if( !newProfile && publications.length >= 1){
                 newPublications = [...publications, ...data.publications];
             }
 
+            // si newProfile == true entonces quiere decir que cambiamos de usuario y necesitamos resetear las publicaciones 
+            if( newProfile ){
+                newPublications = data.publications;
+                setMore(true);
+                setPage(1);
+            }
+            
             setPublications(newPublications);
-        }
-    }
 
-    // metodo nextPage para mostrar mas publicaciones 
-    const nextPage = () => {
-        let next = page + 1;
-        setPage(next);
-        getPublications(next);
+            // comprobamos si hay mas publicaciones que mostrar o ya no 
+            if( !newProfile && publications.length >= (data.total - data.publications.length) ){
+                setMore(false);
+            }
+
+            if( data.pages <= 1 ){
+                setMore(false);
+            }
+        }
     }
 
     return (
@@ -185,65 +197,14 @@ export const Profile = () => {
             </header>
 
 
-            <div className="content__posts">
-
-                {publications ? publications.map(publication =>
-                    <div className="posts__post" key={publication._id}>
-
-                        <div className="post__container">
-
-                            <div className="post__image-user">
-                                <Link to={'/social/perfil/' + publication.user._id} className="post__image-link">
-                                    {publication.user.image != 'default.png' ?
-                                        <img src={Global.url + 'user/avatar/' + publication.user.image} className="post__user-image" alt="Foto de perfil" />
-                                        :
-                                        <img src={avatar} className="post__user-image" alt="Foto de perfil" />
-                                    }
-                                </Link>
-                            </div>
-
-                            <div className="post__body">
-
-                                <div className="post__user-info">
-                                    <a href="#" className="user-info__name">{publication.user.name} {publication.user.surname}</a>
-                                    <span className="user-info__divider"> | </span>
-                                    <a href="#" className="user-info__create-date">{publication.created_at}</a>
-                                </div>
-
-                                <h4 className="post__content">{publication.text}</h4>
-
-                            </div>
-
-                        </div>
-
-
-                        {/* que se muestre el boton borrar solo si eres el creador de la publicacion  */}
-                        {auth._id == publication.user._id &&
-                            <div className="post__buttons">
-
-                                <a href="#" className="post__button">
-                                    <i className="fa-solid fa-trash-can"></i>
-                                </a>
-
-                            </div>
-                        }
-
-
-                    </div>
-                )
-                    :
-                    <h1>NO HAY PUBLICACIONES</h1>
-                }
-
-
-
-            </div>
-
-            <div className="content__container-btn">
-                <button onClick={nextPage} className="content__btn-more-post">
-                    Ver mas publicaciones
-                </button>
-            </div>
+            <PublicationList 
+                publications={publications}
+                page={page}
+                setPage={setPage}
+                more={more}
+                setMore={setMore}
+                getPublications={getPublications}
+            />
 
         </section>
     )
